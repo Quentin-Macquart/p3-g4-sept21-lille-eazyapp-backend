@@ -15,7 +15,7 @@ userRouter.get('/:id', async (req, res) => {
     const { id } = req.params;
     const sql = 'SELECT * FROM User where id=?';
     const [user] = await db.query(sql, [id]);
-    res.status(200).json(user);
+    res.status(200).json(user[0]);
   } catch (err) {
     res.status(400).send(err);
   }
