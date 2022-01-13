@@ -38,13 +38,13 @@ meetingRouter.get('/', async (req, res) => {
 });
 
 meetingRouter.post('/', async (req, res) => {
-  const { beginning, userId, meetingRoom } = req.body;
+  const { beginning, userId, meetingRoomId } = req.body;
   const [resSql] = await db.query(
     `
-    INSERT INTO Meeting (beginning, userId, meetingRoom)
+    INSERT INTO Meeting (beginning, userId, meetingRoomId)
     VALUES (?,?,?)
   `,
-    [beginning, userId, meetingRoom]
+    [beginning, userId, meetingRoomId]
   );
   const newData = { ...req.body, id: resSql.insertId };
 
