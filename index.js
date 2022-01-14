@@ -18,5 +18,5 @@ app.use('/', (req, res) => {
 });
 
 app.listen(backPort, () => {
-  console.log('Eazyapp API now available on http://localhost:5000 !');
+  console.log(`Eazyapp API now available on http://localhost:${backPort} !`);
 });
