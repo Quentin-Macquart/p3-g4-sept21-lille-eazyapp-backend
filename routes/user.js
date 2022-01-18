@@ -21,4 +21,74 @@ userRouter.get('/:id', async (req, res) => {
   }
 });
 
+userRouter.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { amount } = req.body;
+    const sql = 'UPDATE User SET amount=? WHERE id=?';
+    const [newAmount] = await db.query(sql, [amount, id]);
+    res.status(200).json(newAmount);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+userRouter.get('/:id/foodProfile', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sql =
+      'SELECT eggFree, glutenFree, gmoFree, nutFree, sugarFree, cornFree, dairyFree, soyFree, transFatsFree, vegan, shellfishFree, porkFree, vegetarian, fridayFish, onDiet FROM User WHERE id=?';
+    const userFoodProfile = await db.query(sql, [id]);
+    res.status(200).json(userFoodProfile[0]);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+userRouter.post('/:id/foodProfile', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      eggFree,
+      glutenFree,
+      gmoFree,
+      nutFree,
+      sugarFree,
+      cornFree,
+      dairyFree,
+      soyFree,
+      transFatsFree,
+      vegan,
+      shellfishFree,
+      porkFree,
+      vegetarian,
+      fridayFish,
+      onDiet,
+    } = req.body;
+    const sql =
+      'UPDATE User SET eggFree=?, glutenFree=?, gmoFree=?, nutFree=?, sugarFree=?, cornFree=?, dairyFree=?, soyFree=?, transFatsFree=?, vegan=?, shellfishFree=?, porkFree=?, vegetarian=?, fridayFish=?, onDiet=? WHERE id=?';
+    const userFoodProfile = await db.query(sql, [
+      eggFree,
+      glutenFree,
+      gmoFree,
+      nutFree,
+      sugarFree,
+      cornFree,
+      dairyFree,
+      soyFree,
+      transFatsFree,
+      vegan,
+      shellfishFree,
+      porkFree,
+      vegetarian,
+      fridayFish,
+      onDiet,
+      id,
+    ]);
+    res.status(200).json(userFoodProfile);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
 module.exports = userRouter;
