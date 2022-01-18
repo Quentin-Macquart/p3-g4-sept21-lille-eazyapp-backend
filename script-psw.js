@@ -10,8 +10,7 @@ const pswds = [
   'password06',
 ];
 for (let i = 0; i < pswds.length; i += 1) {
-  const pswd = bcrypt.hashSync(pswds[0], jwtRounds);
+  const pswd = bcrypt.hashSync(pswds[1], jwtRounds);
   const id = i + 1;
   db.query(`UPDATE User SET password = ? WHERE id =?`, [pswd, id]);
 }
-process.exit();

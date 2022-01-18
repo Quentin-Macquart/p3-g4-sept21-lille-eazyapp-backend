@@ -14,7 +14,7 @@ passport.use(
     async (formMail, formPassword, done) => {
       try {
         const [sqlRes] = await db.query(
-          `SELECT id, email, firstname, lastname, password, picture, job, isLogged, cardNumber, Amount, isInvited, eggFree, glutenFree, gmoFree, nutFree, sugarFree, cornFree, dairyFree, soyFree, transFatsFree, vegan, shellfishFree, porkFree, vegetarian, fridayFish, onDiet  FROM User WHERE email = ?`,
+          `SELECT id, email, firstname, lastname, password, picture, job, isLogged, cardNumber, amount, isInvited, eggFree, glutenFree, gmoFree, nutFree, sugarFree, cornFree, dairyFree, soyFree, transFatsFree, vegan, shellfishFree, porkFree, vegetarian, fridayFish, onDiet  FROM User WHERE email = ?`,
           [formMail]
         );
         if (!sqlRes.length) return done(null, false);
@@ -28,7 +28,7 @@ passport.use(
           job,
           isLogged,
           cardNumber,
-          Amount,
+          amount,
           isInvited,
           eggFree,
           glutenFree,
@@ -58,7 +58,7 @@ passport.use(
           job,
           isLogged,
           cardNumber,
-          Amount,
+          amount,
           isInvited,
           eggFree,
           glutenFree,
