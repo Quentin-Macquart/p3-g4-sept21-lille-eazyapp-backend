@@ -11,4 +11,15 @@ meetingRoomRouter.get('/', async (req, res) => {
   }
 });
 
+meetingRoomRouter.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sql = 'SELECT * FROM MeetingRoom where id= ?';
+    const [meetingRoom] = await db.query(sql, [id]);
+    res.status(200).json(meetingRoom);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
 module.exports = meetingRoomRouter;
