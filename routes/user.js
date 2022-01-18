@@ -20,6 +20,15 @@ userRouter.get('/:id', async (req, res) => {
     res.status(400).send(err);
   }
 });
+
+userRouter.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { amount } = req.body;
+    const sql = 'UPDATE User SET amount=? WHERE id=?';
+    const [newAmount] = await db.query(sql, [amount, id]);
+    res.status(200).json(newAmount);
+
 userRouter.get('/:id/foodProfile', async (req, res) => {
   try {
     const { id } = req.params;
@@ -76,4 +85,5 @@ userRouter.post('/:id/foodProfile', async (req, res) => {
     res.status(400).send(err);
   }
 });
+
 module.exports = userRouter;
