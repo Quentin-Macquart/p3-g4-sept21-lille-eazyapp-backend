@@ -49,6 +49,7 @@ userRouter.get('/:id/foodProfile', async (req, res) => {
     res.status(400).send(err);
   }
 });
+
 userRouter.post('/:id/foodProfile', async (req, res) => {
   try {
     const { id } = req.params;

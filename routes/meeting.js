@@ -25,6 +25,24 @@ meetingRouter.get('/:id/participants', async (req, res) => {
   }
 });
 
+meetingRouter.post('/participants', async (req, res) => {
+  try {
+    const newParticipants = req.body;
+    const [resSql] = await db.query(
+      `
+    INSERT INTO Participant (userId, reservationId, status)
+    VALUES ?
+  `,
+      [newParticipants[0]]
+    );
+    const newData = { ...req.body, id: resSql.insertId };
+
+    res.status(201).send(newData);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
 meetingRouter.post('/', async (req, res) => {
   const { beginning, userId, meetingRoomId } = req.body;
   const [resSql] = await db.query(
