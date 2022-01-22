@@ -17,9 +17,21 @@ meetingRouter.get('/:id/participants', async (req, res) => {
   try {
     const { id } = req.params;
     const sql =
-      'SELECT status, User.picture FROM Participant JOIN User ON userId = User.id WHERE reservationId = ?';
+      'SELECT status,beginning, meetingRoomId, User.picture,User.firstname, User.lastname FROM Participant JOIN User ON userId = User.id WHERE reservationId = ?';
     const [meeting] = await db.query(sql, [id]);
     res.status(200).json(meeting);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+meetingRouter.get('/user/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sql =
+      'SELECT  Meeting.beginning, Meeting.id, MeetingRoom.number, MeetingRoom.location, meetingRoomId, User.picture,User.firstname, User.lastname FROM Meeting  JOIN User ON Meeting.userId = User.id JOIN MeetingRoom ON Meeting.meetingRoomId = MeetingRoom.id  WHERE Meeting.userId= ?';
+    const [meetings] = await db.query(sql, [id]);
+    res.status(200).json(meetings);
   } catch (err) {
     res.status(400).send(err);
   }

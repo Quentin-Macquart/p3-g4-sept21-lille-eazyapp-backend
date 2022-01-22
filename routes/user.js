@@ -28,6 +28,10 @@ userRouter.put('/:id', async (req, res) => {
     const sql = 'UPDATE User SET amount=? WHERE id=?';
     const [newAmount] = await db.query(sql, [amount, id]);
     res.status(200).json(newAmount);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
 
 userRouter.get('/:id/foodProfile', async (req, res) => {
   try {
