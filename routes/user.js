@@ -1,10 +1,8 @@
 const userRouter = require('express').Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-
 const { jwtSecret } = require('../conf');
 const { db } = require('../conf');
-const { jwtSecret } = require('../conf');
 
 userRouter.get('/', async (req, res) => {
   try {
@@ -36,7 +34,7 @@ userRouter.put('/:id', passport.authenticate('jwt'), async (req, res) => {
     const user = { ...req.user, amount };
     const token = jwt.sign(user, jwtSecret);
     res.status(200).json({ user, token });
-    } catch (err) {
+  } catch (err) {
     res.status(400).send(err);
   }
 });
