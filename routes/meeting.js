@@ -17,7 +17,7 @@ meetingRouter.get('/:id/participants', async (req, res) => {
   try {
     const { id } = req.params;
     const sql =
-      'SELECT status, User.picture,User.firstname, User.lastname FROM Participant JOIN User ON userId = User.id WHERE reservationId = ?';
+      'SELECT status, User.picture,User.firstname, User.lastname, User.id as UserId FROM Participant JOIN User ON userId = User.id WHERE reservationId = ?';
     const [meeting] = await db.query(sql, [id]);
     res.status(200).json(meeting);
   } catch (err) {
