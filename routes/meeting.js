@@ -36,6 +36,17 @@ meetingRouter.get('/user/:id', async (req, res) => {
     res.status(400).send(err);
   }
 });
+meetingRouter.get('/participants/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sql =
+      'SELECT  Meeting.beginning, Meeting.id, MeetingRoom.number, MeetingRoom.location, meetingRoomId, User.picture,User.firstname, User.lastname FROM Participant  JOIN User ON User.id = Participant.userId  JOIN Meeting ON Meeting.id = Participant.reservationId JOIN MeetingRoom ON Meeting.meetingRoomId = MeetingRoom.id WHERE Meeting.userId= ?';
+    const [meetings] = await db.query(sql, [id]);
+    res.status(200).json(meetings);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
 
 meetingRouter.post('/participants', async (req, res) => {
   try {
@@ -48,7 +59,6 @@ meetingRouter.post('/participants', async (req, res) => {
       [newParticipants[0]]
     );
     const newData = { ...req.body, id: resSql.insertId };
-
     res.status(201).send(newData);
   } catch (err) {
     res.status(400).send(err);
