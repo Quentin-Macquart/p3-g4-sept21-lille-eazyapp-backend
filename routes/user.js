@@ -25,6 +25,19 @@ userRouter.get('/:id', passport.authenticate('jwt'), async (req, res) => {
     res.status(400).send(err);
   }
 });
+
+
+userRouter.get('/:id/randomLunch', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sql = 'SELECT * FROM User WHERE id<>? ORDER BY RAND() LIMIT 3';
+    const others = await db.query(sql, [id]);
+    res.status(200).json(others[0]);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
 userRouter.put('/:id', passport.authenticate('jwt'), async (req, res) => {
   try {
     const { id } = req.params;
@@ -38,6 +51,7 @@ userRouter.put('/:id', passport.authenticate('jwt'), async (req, res) => {
     res.status(400).send(err);
   }
 });
+
 userRouter.get('/:id/foodProfile', async (req, res) => {
   try {
     const { id } = req.params;
