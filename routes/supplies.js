@@ -19,14 +19,17 @@ suppliesRouter.post('/:id/cartSupplies', async (req, res) => {
     const sql = 'INSERT INTO cartSupplies (userId) VALUES (?)';
     const [cartSupplies] = await db.query(sql, [id]);
 
-    items.forEach((item) => {
-      item.push(cartSupplies.insertId);
+    const idOrder = cartSupplies.insertId;
+
+    const orderLines = items.map((item) => {
+      return [item.qtty, item.itemId, idOrder];
     });
-    console.log(items);
-    const sql2 =
-      'INSERT INTO Supplies ( quantity, SupplyItem_id, cartSupplies_id) VALUES ?';
-    const supplies = await db.query(sql2, [items[0]]);
-    res.status(200).json(cartSupplies, supplies);
+
+    await db.query(
+      'INSERT INTO Supplies ( quantity, SupplyItem_id, cartSupplies_id) SET ?',
+      orderLines
+    );
+    res.status(201).send('Yay!');
   } catch (err) {
     res.status(400).send(err);
   }
