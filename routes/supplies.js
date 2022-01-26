@@ -14,20 +14,24 @@ suppliesRouter.get('/', async (req, res) => {
 suppliesRouter.post('/:id/cartSupplies', async (req, res) => {
   try {
     const items = req.body;
-
     const { id } = req.params;
     const sql = 'INSERT INTO cartSupplies (userId) VALUES (?)';
     const [cartSupplies] = await db.query(sql, [id]);
 
     const idOrder = cartSupplies.insertId;
 
-    const orderLines = items.map((item) => {
-      return [item.qtty, item.itemId, idOrder];
-    });
+    const orderLines = items
+      .filter((item) => {
+        return item.qtty > 0;
+      })
+      .map((item) => {
+        return [item.qtty, item.itemId, idOrder];
+      });
+    console.log(orderLines);
 
     await db.query(
-      'INSERT INTO Supplies ( quantity, SupplyItem_id, cartSupplies_id) SET ?',
-      orderLines
+      'INSERT INTO Supplies (quantity, supplyItem_id, cartSupplies_id ) VALUES  ?',
+      [orderLines]
     );
     res.status(201).send('Yay!');
   } catch (err) {
