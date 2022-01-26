@@ -27,7 +27,6 @@ suppliesRouter.post('/:id/cartSupplies', async (req, res) => {
       .map((item) => {
         return [item.qtty, item.itemId, idOrder];
       });
-    console.log(orderLines);
 
     await db.query(
       'INSERT INTO Supplies (quantity, supplyItem_id, cartSupplies_id ) VALUES  ?',
