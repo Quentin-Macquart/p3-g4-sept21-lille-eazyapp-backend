@@ -6,7 +6,6 @@ const authRouter = require('./auth');
 const userRouter = require('./user');
 const meetingResetRouter = require('./meetingReset');
 const officeRouter = require('./office');
-const officeReservationRouter = require('./officeReservation');
 
 const setupRoutes = (app) => {
   app.use('/auth', authRouter);
@@ -17,7 +16,6 @@ const setupRoutes = (app) => {
   app.use('/user', userRouter);
   app.use('/meetingReset', meetingResetRouter);
   app.use('/office', officeRouter);
-  app.use('/officeReservation', officeReservationRouter);
 };
 
 module.exports = {
