@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 
 const { jwtSecret } = require('../conf');
 const { db } = require('../conf');
-const { jwtSecret } = require('../conf');
 
 userRouter.get('/', async (req, res) => {
   try {
@@ -36,7 +35,7 @@ userRouter.put('/:id', passport.authenticate('jwt'), async (req, res) => {
     const user = { ...req.user, amount };
     const token = jwt.sign(user, jwtSecret);
     res.status(200).json({ user, token });
-    } catch (err) {
+  } catch (err) {
     res.status(400).send(err);
   }
 });
@@ -47,6 +46,34 @@ userRouter.get('/:id/foodProfile', async (req, res) => {
       'SELECT eggFree, glutenFree, gmoFree, nutFree, sugarFree, cornFree, dairyFree, soyFree, transFatsFree, vegan, shellfishFree, porkFree, vegetarian, fridayFish, onDiet FROM User WHERE id=?';
     const userFoodProfile = await db.query(sql, [id]);
     res.status(200).json(userFoodProfile[0]);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+userRouter.post('/:id/menuItems', async (req, res) => {
+  try {
+    const { id: menuItemId } = req.body;
+    const { id } = req.params;
+    const sqlCart = 'INSERT INTO CartMenu (userId) VALUES (?)';
+    const cartMenu = await db.query(sqlCart, [id]);
+
+    const sqlMenu =
+      'INSERT INTO MenuItems (cartId, menuItemId, quantity) VALUES (LAST_INSERT_ID(),?,1)';
+    const menuItems = await db.query(sqlMenu, [menuItemId]);
+    res.status(200).json({ cartMenu, menuItems });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+userRouter.get('/:id/myMeal', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sql =
+      'SELECT MenuItem.name, MenuItem.picture FROM MenuItem INNER JOIN MenuItems ON menuItemId = MenuItem.id INNER JOIN CartMenu ON CartMenu.id = MenuItems.cartId INNER JOIN User ON User.id = CartMenu.userId WHERE User.id= ?';
+    const [myMeal] = await db.query(sql, [id]);
+    res.status(200).json(myMeal);
   } catch (err) {
     res.status(400).send(err);
   }
