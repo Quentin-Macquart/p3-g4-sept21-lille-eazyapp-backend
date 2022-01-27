@@ -13,4 +13,37 @@ officeRouter.get('/', async (req, res) => {
   }
 });
 
+officeRouter.post('/officeReservation', async (req, res) => {
+  try {
+    const { userId, beginning, officeId } = req.body;
+    const [resSql] = await db.query(
+      `
+    INSERT INTO OfficeReservation (userId, beginning, officeId)
+    VALUES (?,?,?)
+  `,
+      [userId, beginning, officeId]
+    );
+    const newData = { ...req.body, id: resSql.insertId };
+    res.status(201).send(newData);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+officeRouter.delete('/officeReservation', async (req, res) => {
+  try {
+    const { userId, beginning } = req.body;
+    const [resSql] = await db.query(
+      `
+    DELETE FROM OfficeReservation WHERE userId = ? AND beginning = ?; 
+  `,
+      [userId, beginning]
+    );
+    const newData = { ...req.body, id: resSql.insertId };
+    res.status(201).send(newData);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
 module.exports = officeRouter;
