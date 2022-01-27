@@ -32,7 +32,7 @@ suppliesRouter.post('/:id/cartSupplies', async (req, res) => {
       'INSERT INTO Supplies (quantity, supplyItem_id, cartSupplies_id ) VALUES  ?',
       [orderLines]
     );
-    res.status(201).send('Yay!');
+    res.status(201).json('Done with success!');
   } catch (err) {
     res.status(400).send(err);
   }
