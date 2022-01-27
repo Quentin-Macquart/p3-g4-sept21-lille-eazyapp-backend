@@ -38,4 +38,21 @@ suppliesRouter.post('/:id/cartSupplies', async (req, res) => {
   }
 });
 
+suppliesRouter.get('/:id/myOrder', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sqlOrder =
+      'SELECT SupplyItem.name, SupplyItem.picture FROM SupplyItem INNER JOIN Supplies ON SupplyItem_id = SupplyItem.id INNER JOIN cartSupplies ON cartSupplies.id = Supplies.cartSupplies_id INNER JOIN User ON User.id = cartSupplies.userId WHERE User.id= ?';
+    const [orderRecap] = await db.query(sqlOrder, [id]);
+
+    const sqlQuantity =
+      'SELECT Supplies.quantity FROM Supplies INNER JOIN cartSupplies ON cartSupplies.id = Supplies.cartSupplies_id INNER JOIN User ON User.id = cartSupplies.userId WHERE User.id = ? ';
+    const [quantityRecap] = await db.query(sqlQuantity, [id]);
+
+    res.status(200).json({ orderRecap, quantityRecap });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
 module.exports = suppliesRouter;
