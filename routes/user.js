@@ -13,6 +13,7 @@ userRouter.get('/', async (req, res) => {
     res.status(400).send(err);
   }
 });
+
 userRouter.get('/:id', passport.authenticate('jwt'), async (req, res) => {
   try {
     const { id } = req.params;
