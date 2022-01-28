@@ -17,9 +17,7 @@ suppliesRouter.post('/:id/cartSupplies', async (req, res) => {
     const { id } = req.params;
     const sql = 'INSERT INTO cartSupplies (userId) VALUES (?)';
     const [cartSupplies] = await db.query(sql, [id]);
-
     const idOrder = cartSupplies.insertId;
-
     const orderLines = items
       .filter((item) => {
         return item.qtty > 0;
@@ -27,7 +25,6 @@ suppliesRouter.post('/:id/cartSupplies', async (req, res) => {
       .map((item) => {
         return [item.qtty, item.itemId, idOrder];
       });
-
     await db.query(
       'INSERT INTO Supplies (quantity, supplyItem_id, cartSupplies_id ) VALUES  ?',
       [orderLines]
