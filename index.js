@@ -7,7 +7,7 @@ app.use(passport.initialize());
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
   cors: {
-    origin: 'http://192.168.1.23:3000',
+    origin: 'http://192.168.0.29:3000',
   },
 });
 const { backPort, db } = require('./conf');
@@ -26,11 +26,17 @@ const addMessage = (data) => {
     time: new Date(),
     ...data,
   };
-  db.query('INSERT INTO Messages (userId,content,time) VALUES (?,?,?)', [
-    newMsg.author,
-    newMsg.content,
-    newMsg.time,
-  ]);
+  db.query(
+    'INSERT INTO Messages (userId,content,time,picture,firstname,lastname) VALUES (?,?,?,?,?,?)',
+    [
+      newMsg.userId,
+      newMsg.content,
+      newMsg.time,
+      newMsg.picture,
+      newMsg.firstname,
+      newMsg.lastname,
+    ]
+  );
   messages.push(newMsg);
   io.emit('listMsg', messages);
 };
