@@ -26,7 +26,6 @@ userRouter.get('/:id', passport.authenticate('jwt'), async (req, res) => {
   }
 });
 
-
 userRouter.get('/:id/randomLunch', async (req, res) => {
   try {
     const { id } = req.params;
