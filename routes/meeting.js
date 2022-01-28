@@ -36,7 +36,6 @@ meetingRouter.post('/participants', async (req, res) => {
       [newParticipants[0]]
     );
     const newData = { ...req.body, id: resSql.insertId };
-
     res.status(201).send(newData);
   } catch (err) {
     res.status(400).send(err);

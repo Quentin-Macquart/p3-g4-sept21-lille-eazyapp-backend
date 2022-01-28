@@ -64,7 +64,6 @@ foodRouter.get('/desserts', passport.authenticate('jwt'), async (req, res) => {
     } = req.user;
     const sql = 'SELECT * FROM MenuItem WHERE MenuItem.type="dessert"';
     const [menuItem] = await db.query(sql);
-
     const menuItemFiltered = menuItem.filter(
       (typeOfFood) =>
         (!eggFree || (eggFree && typeOfFood.eggFree)) &&
@@ -86,7 +85,6 @@ foodRouter.get('/desserts', passport.authenticate('jwt'), async (req, res) => {
 foodRouter.get('/drinks', passport.authenticate('jwt'), async (req, res) => {
   try {
     const { sugarFree, dairyFree, transFatsFree, vegan, onDiet } = req.user;
-
     const sql = 'SELECT * FROM MenuItem WHERE MenuItem.type="drink"';
     const [menuItem] = await db.query(sql);
     const menuItemFiltered = menuItem.filter(

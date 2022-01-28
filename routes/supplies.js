@@ -17,9 +17,7 @@ suppliesRouter.post('/:id/cartSupplies', async (req, res) => {
     const { id } = req.params;
     const sql = 'INSERT INTO cartSupplies (userId) VALUES (?)';
     const [cartSupplies] = await db.query(sql, [id]);
-
     const idOrder = cartSupplies.insertId;
-
     const orderLines = items
       .filter((item) => {
         return item.qtty > 0;
@@ -46,7 +44,6 @@ suppliesRouter.get('/:id/myOrder', async (req, res) => {
     const sqlQuantity =
       'SELECT Supplies.quantity FROM Supplies INNER JOIN cartSupplies ON cartSupplies.id = Supplies.cartSupplies_id INNER JOIN User ON User.id = cartSupplies.userId WHERE User.id = ? ';
     const [quantityRecap] = await db.query(sqlQuantity, [id]);
-
     res.status(200).json({ orderRecap, quantityRecap });
   } catch (err) {
     res.status(400).send(err);
