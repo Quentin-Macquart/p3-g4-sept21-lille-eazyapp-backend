@@ -4,7 +4,7 @@ const suppliesRouter = require('./supplies');
 const meetingRouter = require('./meeting');
 const authRouter = require('./auth');
 const userRouter = require('./user');
-const meetingResetRouter = require('./meetingReset');
+const resetRouter = require('./reset');
 const officeRouter = require('./office');
 
 const setupRoutes = (app) => {
@@ -14,7 +14,7 @@ const setupRoutes = (app) => {
   app.use('/supplies', suppliesRouter);
   app.use('/meeting', meetingRouter);
   app.use('/user', userRouter);
-  app.use('/meetingReset', meetingResetRouter);
+  app.use('/reset', resetRouter);
   app.use('/office', officeRouter);
 };
 

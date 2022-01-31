@@ -1,52 +1,80 @@
 const moment = require('moment');
 
 const dayDate = new Date();
-const beginnings = [];
+const beginningsMeeting = [];
+const beginningsOffice = [];
 // Meeting for Room 1 and 2
 // d+1
 
 dayDate.setDate(dayDate.getDate() + 1);
-beginnings.push(
+beginningsMeeting.push(
   moment(dayDate.setHours(8, 0, 0)).format('YYYY-MM-DD HH:mm:ss'),
   moment(dayDate.setHours(9, 0, 0)).format('YYYY-MM-DD HH:mm:ss'),
   moment(dayDate.setHours(10, 0, 0)).format('YYYY-MM-DD HH:mm:ss'),
   moment(dayDate.setHours(14, 0, 0)).format('YYYY-MM-DD HH:mm:ss'),
   moment(dayDate.setHours(15, 0, 0)).format('YYYY-MM-DD HH:mm:ss')
 );
+beginningsOffice.push(
+  moment(dayDate.setHours(8, 0, 0)).format('YYYY-MM-DD HH:mm:ss'),
+  moment(dayDate.setHours(14, 0, 0)).format('YYYY-MM-DD HH:mm:ss')
+);
 
 // d+2
 
 dayDate.setDate(dayDate.getDate() + 1);
-beginnings.push(
+beginningsMeeting.push(
   moment(dayDate.setHours(9, 0, 0)).format('YYYY-MM-DD HH:mm:ss'),
   moment(dayDate.setHours(11, 0, 0)).format('YYYY-MM-DD HH:mm:ss'),
   moment(dayDate.setHours(15, 0, 0)).format('YYYY-MM-DD HH:mm:ss'),
   moment(dayDate.setHours(16, 0, 0)).format('YYYY-MM-DD HH:mm:ss')
 );
+
+beginningsOffice.push(
+  moment(dayDate.setHours(8, 0, 0)).format('YYYY-MM-DD HH:mm:ss'),
+  moment(dayDate.setHours(14, 0, 0)).format('YYYY-MM-DD HH:mm:ss')
+);
 // d+3
 
 dayDate.setDate(dayDate.getDate() + 1);
-beginnings.push(
+beginningsMeeting.push(
   moment(dayDate.setHours(10, 0, 0)).format('YYYY-MM-DD HH:mm:ss'),
+  moment(dayDate.setHours(14, 0, 0)).format('YYYY-MM-DD HH:mm:ss')
+);
+beginningsOffice.push(
+  moment(dayDate.setHours(8, 0, 0)).format('YYYY-MM-DD HH:mm:ss'),
   moment(dayDate.setHours(14, 0, 0)).format('YYYY-MM-DD HH:mm:ss')
 );
 
 // beginnings --> beginning,userId,meetingRoom
-
+const resOffice = [
+  [beginningsOffice[1], 1, 2],
+  [beginningsOffice[2], 1, 5],
+  [beginningsOffice[3], 2, 1],
+  [beginningsOffice[2], 2, 4],
+  [beginningsOffice[4], 2, 1],
+  [beginningsOffice[0], 3, 1],
+  [beginningsOffice[5], 3, 4],
+  [beginningsOffice[0], 4, 6],
+  [beginningsOffice[0], 4, 3],
+  [beginningsOffice[2], 5, 1],
+  [beginningsOffice[1], 5, 4],
+  [beginningsOffice[0], 6, 5],
+  [beginningsOffice[2], 6, 2],
+];
 const meetings = [
-  [beginnings[0], 2, 1],
-  [beginnings[1], 3, 1],
-  [beginnings[2], 6, 1],
-  [beginnings[4], 5, 1],
-  [beginnings[6], 4, 1],
-  [beginnings[8], 1, 1],
-  [beginnings[9], 2, 1],
-  [beginnings[0], 4, 2],
-  [beginnings[3], 4, 2],
-  [beginnings[4], 5, 2],
-  [beginnings[5], 6, 2],
-  [beginnings[7], 5, 2],
-  [beginnings[10], 2, 2],
+  [beginningsMeeting[0], 2, 1],
+  [beginningsMeeting[1], 3, 1],
+  [beginningsMeeting[2], 6, 1],
+  [beginningsMeeting[4], 5, 1],
+  [beginningsMeeting[6], 4, 1],
+  [beginningsMeeting[8], 1, 1],
+  [beginningsMeeting[9], 2, 1],
+  [beginningsMeeting[0], 4, 2],
+  [beginningsMeeting[3], 4, 2],
+  [beginningsMeeting[4], 5, 2],
+  [beginningsMeeting[5], 6, 2],
+  [beginningsMeeting[7], 5, 2],
+  [beginningsMeeting[10], 2, 2],
 ];
 
 const participants = [
@@ -96,4 +124,4 @@ const participants = [
   [4, 13, 'présentiel'],
 ];
 
-module.exports = { meetings, participants };
+module.exports = { meetings, participants, resOffice };
