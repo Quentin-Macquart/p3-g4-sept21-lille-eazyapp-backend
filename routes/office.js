@@ -5,8 +5,8 @@ officeRouter.get('/:id/myReservation', async (req, res) => {
   try {
     const { id } = req.params;
     const sql = 'SELECT beginning FROM OfficeReservation WHERE userId = ?';
-    const reservation = await db.query(sql, [id]);
-    res.status(201).send(reservation);
+    const [reservations] = await db.query(sql, [id]);
+    res.status(201).send(reservations);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -18,7 +18,7 @@ officeRouter.get('/', async (req, res) => {
     const sql =
       'SELECT number,User.picture, OfficeReservation.officeId, OfficeReservation.userId, OfficeReservation.beginning FROM Office JOIN OfficeReservation ON OfficeReservation.officeId = Office.id JOIN User ON OfficeReservation.userId = User.id WHERE OfficeReservation.beginning = ?';
     const [office] = await db.query(sql, [slot]);
-    res.status(201).send(office);
+    res.status(201).json(office);
   } catch (err) {
     res.status(400).send(err);
   }
