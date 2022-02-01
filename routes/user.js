@@ -69,11 +69,12 @@ userRouter.post('/:id/menuItems', async (req, res) => {
     const { id: menuItemId } = req.body;
     const { id } = req.params;
     const sqlCart = 'INSERT INTO CartMenu (userId) VALUES (?)';
-    const cartMenu = await db.query(sqlCart, [id]);
+    const [cartMenu] = await db.query(sqlCart, [id]);
+    const cartMenuId = cartMenu.insertId;
 
     const sqlMenu =
-      'INSERT INTO MenuItems (cartId, menuItemId, quantity) VALUES (LAST_INSERT_ID(),?,1)';
-    const menuItems = await db.query(sqlMenu, [menuItemId]);
+      'INSERT INTO MenuItems (cartId, menuItemId, quantity) VALUES (?,?,1)';
+    const menuItems = await db.query(sqlMenu, [cartMenuId, menuItemId]);
     res.status(200).json({ cartMenu, menuItems });
   } catch (err) {
     res.status(400).send(err);
