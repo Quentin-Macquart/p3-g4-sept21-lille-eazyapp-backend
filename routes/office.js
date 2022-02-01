@@ -1,13 +1,24 @@
 const officeRouter = require('express').Router();
 const { db } = require('../conf');
 
+officeRouter.get('/:id/myReservation', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const sql = 'SELECT beginning FROM OfficeReservation WHERE userId = ?';
+    const [reservations] = await db.query(sql, [id]);
+    res.status(201).send(reservations);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
 officeRouter.get('/', async (req, res) => {
   try {
     const { slot } = req.query;
     const sql =
       'SELECT number,User.picture, OfficeReservation.officeId, OfficeReservation.userId, OfficeReservation.beginning FROM Office JOIN OfficeReservation ON OfficeReservation.officeId = Office.id JOIN User ON OfficeReservation.userId = User.id WHERE OfficeReservation.beginning = ?';
     const [office] = await db.query(sql, [slot]);
-    res.status(200).json(office);
+    res.status(201).json(office);
   } catch (err) {
     res.status(400).send(err);
   }
