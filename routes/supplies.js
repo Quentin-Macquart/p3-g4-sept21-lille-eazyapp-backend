@@ -15,7 +15,7 @@ suppliesRouter.post('/:id/cartSupplies', async (req, res) => {
   try {
     const items = req.body;
     const { id } = req.params;
-    const sql = 'INSERT INTO cartSupplies (userId) VALUES (?)';
+    const sql = 'INSERT INTO CartSupplies (userId) VALUES (?)';
     const [cartSupplies] = await db.query(sql, [id]);
     const idOrder = cartSupplies.insertId;
     const orderLines = items
@@ -39,10 +39,10 @@ suppliesRouter.get('/:id/myOrder', async (req, res) => {
   try {
     const { id } = req.params;
     const sqlOrder =
-      'SELECT SupplyItem.name, SupplyItem.picture FROM SupplyItem INNER JOIN Supplies ON SupplyItemId = SupplyItem.id INNER JOIN CartSupplies ON CartSupplies.id = Supplies.cartSuppliesId INNER JOIN User ON User.id = CartSupplies.userId WHERE User.id= ?';
+      'SELECT SupplyItem.name, SupplyItem.picture FROM SupplyItem INNER JOIN Supplies ON supplyItemId = SupplyItem.id INNER JOIN CartSupplies ON CartSupplies.id = Supplies.cartSuppliesId INNER JOIN User ON User.id = CartSupplies.userId WHERE User.id= ?';
     const [orderRecap] = await db.query(sqlOrder, [id]);
     const sqlQuantity =
-      'SELECT Supplies.quantity FROM Supplies INNER JOIN CartSupplies ON CartSupplies.id = Supplies.CartSuppliesId INNER JOIN User ON User.id = CartSupplies.userId WHERE User.id = ? ';
+      'SELECT Supplies.quantity FROM Supplies INNER JOIN CartSupplies ON CartSupplies.id = Supplies.cartSuppliesId INNER JOIN User ON User.id = CartSupplies.userId WHERE User.id = ? ';
     const [quantityRecap] = await db.query(sqlQuantity, [id]);
     res.status(200).json({ orderRecap, quantityRecap });
   } catch (err) {

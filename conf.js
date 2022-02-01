@@ -11,6 +11,7 @@ const {
   BACK_PORT,
   JWT_SALTROUNDS,
   JWT_SECRET,
+  IP_ADRESS,
 } = process.env;
 
 const db = mysql.createPool({
@@ -27,4 +28,5 @@ module.exports = {
   db,
   jwtRounds: parseInt(JWT_SALTROUNDS, 10),
   jwtSecret: JWT_SECRET,
+  ipAdress: IP_ADRESS,
 };

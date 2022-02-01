@@ -3,15 +3,19 @@ const cors = require('cors');
 const passport = require('passport');
 
 const app = express();
-app.use(passport.initialize());
 const server = require('http').createServer(app);
-const io = require('socket.io')(server, {
+const socketIo = require('socket.io');
+const { ipAdress } = require('./conf');
+
+const io = socketIo(server, {
   cors: {
-    origin: 'http://192.168.0.29:3000',
+    origin: ipAdress,
   },
 });
 const { backPort, db } = require('./conf');
 const { setupRoutes } = require('./routes');
+
+app.use(passport.initialize());
 
 app.use(cors());
 

@@ -8,6 +8,7 @@ const pswds = [
   'password04',
   'password05',
   'password06',
+  'welcome07',
 ];
 for (let i = 0; i < pswds.length; i += 1) {
   const pswd = bcrypt.hashSync(pswds[i], jwtRounds);
