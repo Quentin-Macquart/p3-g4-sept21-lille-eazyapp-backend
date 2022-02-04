@@ -55,11 +55,12 @@ const resOffice = [
   [beginningsOffice[0], 3, 1],
   [beginningsOffice[5], 3, 4],
   [beginningsOffice[0], 4, 6],
-  [beginningsOffice[0], 4, 3],
   [beginningsOffice[2], 5, 1],
   [beginningsOffice[1], 5, 4],
   [beginningsOffice[0], 6, 5],
   [beginningsOffice[2], 6, 2],
+  [beginningsOffice[0], 7, 2],
+  [beginningsOffice[4], 7, 2],
 ];
 const meetings = [
   [beginningsMeeting[0], 2, 1],
@@ -73,8 +74,10 @@ const meetings = [
   [beginningsMeeting[3], 4, 2],
   [beginningsMeeting[4], 5, 2],
   [beginningsMeeting[5], 6, 2],
-  [beginningsMeeting[7], 5, 2],
-  [beginningsMeeting[10], 2, 2],
+  [beginningsMeeting[7], 5, 3],
+  [beginningsMeeting[10], 2, 3],
+  [beginningsMeeting[7], 7, 2],
+  [beginningsMeeting[10], 7, 2],
 ];
 
 const participants = [
@@ -82,6 +85,7 @@ const participants = [
   [3, 1, 'distenciel'],
   [4, 1, 'distanciel'],
   [5, 1, 'présentiel'],
+  [7, 1, 'distenciel'],
   [6, 1, 'présentiel'],
   [1, 2, 'distanciel'],
   [2, 2, 'présentiel'],
@@ -96,7 +100,7 @@ const participants = [
   [3, 4, 'présentiel'],
   [3, 5, 'distenciel'],
   [1, 5, 'distanciel'],
-  [6, 5, 'présentiel'],
+  [7, 5, 'présentiel'],
   [6, 6, 'présentiel'],
   [5, 6, 'distanciel'],
   [4, 6, 'présentiel'],
@@ -122,6 +126,10 @@ const participants = [
   [1, 13, 'présentiel'],
   [3, 13, 'distanciel'],
   [4, 13, 'présentiel'],
+  [4, 14, 'distanciel'],
+  [5, 14, 'présentiel'],
+  [2, 15, 'distanciel'],
+  [6, 15, 'présentiel'],
 ];
 
 module.exports = { meetings, participants, resOffice };
