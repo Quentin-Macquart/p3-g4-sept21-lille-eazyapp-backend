@@ -40,7 +40,7 @@ meetingRouter.get('/participants/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const sql =
-      'SELECT  Meeting.beginning, Meeting.id, MeetingRoom.number, MeetingRoom.location, meetingRoomId, Meeting.userId ,User.picture,User.firstname, User.lastname FROM Participant JOIN Meeting ON Meeting.id = Participant.reservationId JOIN User ON Meeting.userId = User.Id   JOIN MeetingRoom ON Meeting.meetingRoomId = MeetingRoom.id WHERE Participant.userId= ?';
+      'SELECT  Meeting.beginning, Meeting.id, MeetingRoom.number, MeetingRoom.location,status, meetingRoomId, Meeting.userId ,User.picture,User.firstname, User.lastname FROM Participant JOIN Meeting ON Meeting.id = Participant.reservationId JOIN User ON Meeting.userId = User.Id   JOIN MeetingRoom ON Meeting.meetingRoomId = MeetingRoom.id WHERE Participant.userId= ?';
     const [meetings] = await db.query(sql, [id]);
     res.status(200).json(meetings);
   } catch (err) {
